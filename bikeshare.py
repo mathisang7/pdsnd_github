@@ -214,12 +214,41 @@ def user_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def display_data(df):
 
+    while True:
+        choices=['yes','no']
+        choose= input("Would you like to view raw data (5 entries)? enter 'yes' or 'no'\n").lower()
+        if choose in choices:
+            if choose=='yes':
+                begin=0
+                end=5
+                data = df.iloc[begin:end,:9]
+                print(data)
+            break     
+        else:
+            print("Please enter a valid input")
+    if  choose=='yes':       
+            while True:
+                choose2= input("Would you like to view few more raw data? enter 'yes' or 'no'\n").lower()
+                if choose2 in choices:
+                    if choose2=='yes':
+                        begin+=5
+                        end+=5
+                        data = df.iloc[begin:end,:9]
+                        print(data)
+                    else:    
+                        break  
+                else:
+                    print("Please enter a valid input")              
+    print('-'*40)
+    
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
+        display_data(df)
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
